@@ -11,90 +11,125 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-name">
-        <span class="monogram">MY</span>
-        <div>
-          <p class="name">Marcus Yang</p>
-          <p class="sub">Aerospace Engineering · UIUC 2028</p>
-        </div>
-      </div>
-      <span class="saved-toast" id="savedToast">✓ Saved</span>
+  <!-- API Key Setup Screen -->
+  <div id="setupScreen" class="setup-screen">
+    <div class="setup-card">
+      <div class="monogram setup-mono">MY</div>
+      <h1 class="setup-title">Marcus Yang<br/>Job Search</h1>
+      <p class="setup-sub">Enter your Anthropic API key to enable AI-powered job search and resume tailoring. Stored only in your browser — never in your code or GitHub.</p>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" />
+      <button class="btn btn-primary btn-full" onclick="saveApiKey()">Save &amp; Continue →</button>
+      <p class="setup-hint">Get a key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
     </div>
-  </header>
+  </div>
 
-  <main class="main">
+  <!-- Main App -->
+  <div id="appShell" class="hidden">
 
-    <div class="tab-bar" role="tablist">
-      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="industries">Target industries</button>
-      <button class="tab-btn" role="tab" aria-selected="false" data-tab="description">Internship details</button>
-      <button class="tab-btn" role="tab" aria-selected="false" data-tab="export">Export</button>
-    </div>
-
-    <!-- ───── TAB 1: Industries ───── -->
-    <section class="tab-panel active" id="tab-industries" role="tabpanel">
-
-      <div class="panel-intro">
-        <p>Primary goal is a <strong>propulsion internship</strong> — but open to any engineering experience. Toggle industries, edit role titles, and set your priority.</p>
-      </div>
-
-      <div class="industry-grid" id="industryGrid"></div>
-
-      <div class="add-industry-row">
-        <input type="text" id="newIndustryInput" placeholder="Add an industry (e.g. Civil Engineering)" />
-        <button class="btn" onclick="addIndustry()">+ Add</button>
-      </div>
-
-    </section>
-
-    <!-- ───── TAB 2: Details ───── -->
-    <section class="tab-panel" id="tab-description" role="tabpanel">
-
-      <div class="detail-section">
-        <label class="detail-label">📍 Locations <span class="detail-note">— less critical, but good to specify</span></label>
-        <div class="tag-wrap" id="locationsTags"></div>
-        <div class="add-row">
-          <input type="text" id="locationsInput" placeholder="e.g. Los Angeles, CA" />
-          <button class="btn" onclick="addTag('locations')">Add</button>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-name">
+          <span class="monogram">MY</span>
+          <div>
+            <p class="name">Marcus Yang</p>
+            <p class="sub">Aerospace Engineering · UIUC 2028</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <span class="saved-toast" id="savedToast">✓ Saved</span>
+          <button class="btn btn-sm" onclick="clearApiKey()">Reset key</button>
         </div>
       </div>
+    </header>
 
-      <div class="detail-section">
-        <label class="detail-label">🎯 Experience type</label>
-        <div class="pill-group" id="expPills"></div>
+    <main class="main">
+
+      <div class="top-tab-bar" role="tablist">
+        <button class="top-tab active" onclick="switchTopTab('search')">⚡ Job search</button>
+        <button class="top-tab" onclick="switchTopTab('criteria')">My criteria</button>
       </div>
 
-      <div class="detail-section">
-        <label class="detail-label">🔧 Must-have skills <span class="detail-note">— include if relevant to the posting</span></label>
-        <div class="tag-wrap" id="skillsTags"></div>
-        <div class="add-row">
-          <input type="text" id="skillsInput" placeholder="e.g. ANSYS Fluent, CAD, Python" />
-          <button class="btn" onclick="addTag('skills')">Add</button>
+      <!-- SEARCH TAB -->
+      <div class="top-panel active" id="top-search">
+
+        <div class="search-bar-row">
+          <button class="btn btn-primary search-btn" id="searchBtn" onclick="runJobSearch()">
+            <span id="searchBtnText">Find jobs for me</span>
+          </button>
+          <p class="search-hint">Searches the web using your saved criteria</p>
         </div>
+
+        <div id="searchStatus" class="search-status hidden"></div>
+
+        <div id="jobResultsArea" class="hidden">
+          <div class="results-header">
+            <p class="results-title" id="resultsTitle">Results</p>
+            <button class="btn btn-sm" onclick="runJobSearch()">↻ Refresh</button>
+          </div>
+          <div class="job-tab-bar" id="jobTabBar" role="tablist"></div>
+          <div id="jobPanels"></div>
+        </div>
+
       </div>
 
-      <div class="detail-section">
-        <label class="detail-label">📝 Default cover letter blurb <span class="detail-note">— tailor per application</span></label>
-        <textarea id="blurbText" class="blurb-textarea" placeholder="Draft your default internship pitch here — customize for each application..."></textarea>
-      </div>
+      <!-- CRITERIA TAB -->
+      <div class="top-panel hidden" id="top-criteria">
 
-    </section>
+        <div class="tab-bar" role="tablist">
+          <button class="tab-btn active" onclick="switchTab('industries')">Target industries</button>
+          <button class="tab-btn" onclick="switchTab('description')">Internship details</button>
+          <button class="tab-btn" onclick="switchTab('xport')">Export</button>
+        </div>
 
-    <!-- ───── TAB 3: Export ───── -->
-    <section class="tab-panel" id="tab-export" role="tabpanel">
-      <div class="export-intro">
-        <p>Copy your job criteria as JSON to paste into job-search tools, share with a mentor, or store as a backup.</p>
-      </div>
-      <div class="export-actions">
-        <button class="btn btn-primary" onclick="copyJSON()">Copy JSON</button>
-        <button class="btn" onclick="downloadJSON()">Download .json</button>
-      </div>
-      <pre class="export-pre" id="exportPre"></pre>
-      <p class="copy-confirm" id="copyConfirm">Copied to clipboard!</p>
-    </section>
+        <div class="tab-panel active" id="tab-industries">
+          <div class="panel-intro"><p>Primary goal is a <strong>propulsion internship</strong> — open to any engineering experience. Toggle industries, edit roles, set priority.</p></div>
+          <div class="industry-grid" id="industryGrid"></div>
+          <div class="add-industry-row">
+            <input type="text" id="newIndustryInput" placeholder="Add an industry (e.g. Civil Engineering)" />
+            <button class="btn" onclick="addIndustry()">+ Add</button>
+          </div>
+        </div>
 
-  </main>
+        <div class="tab-panel hidden" id="tab-description">
+          <div class="detail-section">
+            <label class="detail-label">📍 Locations <span class="detail-note">— less critical</span></label>
+            <div class="tag-wrap" id="locationsTags"></div>
+            <div class="add-row">
+              <input type="text" id="locationsInput" placeholder="e.g. Los Angeles, CA" />
+              <button class="btn" onclick="addTag('locations')">Add</button>
+            </div>
+          </div>
+          <div class="detail-section">
+            <label class="detail-label">🎯 Experience type</label>
+            <div class="pill-group" id="expPills"></div>
+          </div>
+          <div class="detail-section">
+            <label class="detail-label">🔧 Must-have skills <span class="detail-note">— include if relevant</span></label>
+            <div class="tag-wrap" id="skillsTags"></div>
+            <div class="add-row">
+              <input type="text" id="skillsInput" placeholder="e.g. ANSYS Fluent, CAD, Python" />
+              <button class="btn" onclick="addTag('skills')">Add</button>
+            </div>
+          </div>
+          <div class="detail-section">
+            <label class="detail-label">📝 Cover letter blurb <span class="detail-note">— tailor per application</span></label>
+            <textarea id="blurbText" class="blurb-textarea" placeholder="Draft your default internship pitch here..."></textarea>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="tab-xport">
+          <div class="export-intro"><p>Copy your job criteria as JSON.</p></div>
+          <div class="export-actions">
+            <button class="btn btn-primary" onclick="copyJSON()">Copy JSON</button>
+            <button class="btn" onclick="downloadJSON()">Download .json</button>
+          </div>
+          <pre class="export-pre" id="exportPre"></pre>
+          <p class="copy-confirm" id="copyConfirm">Copied!</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
 
   <!-- Edit Roles Modal -->
   <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
@@ -103,11 +138,26 @@
         <p class="modal-title" id="modalTitle">Edit roles</p>
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
-      <p class="modal-hint">One role per line</p>
+      <p class="modal-hint-text">One role per line</p>
       <textarea class="modal-textarea" id="modalTextarea"></textarea>
       <div class="modal-actions">
         <button class="btn" onclick="closeModal()">Cancel</button>
         <button class="btn btn-primary" onclick="saveModal()">Save roles</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resume Modal -->
+  <div class="modal-backdrop" id="resumeModalBackdrop" onclick="closeResumeModal()">
+    <div class="modal modal-lg" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <p class="modal-title" id="resumeModalTitle">Tailored resume</p>
+        <button class="modal-close" onclick="closeResumeModal()">✕</button>
+      </div>
+      <div id="resumeModalBody" class="resume-body"></div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeResumeModal()">Close</button>
+        <button class="btn btn-primary" onclick="copyResume()">Copy text</button>
       </div>
     </div>
   </div>
