@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcus Yang — Job Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-name">
+        <span class="monogram">MY</span>
+        <div>
+          <p class="name">Marcus Yang</p>
+          <p class="sub">Aerospace Engineering · UIUC 2028</p>
+        </div>
+      </div>
+      <span class="saved-toast" id="savedToast">✓ Saved</span>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="industries">Target industries</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="description">Internship details</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="export">Export</button>
+    </div>
+
+    <!-- ───── TAB 1: Industries ───── -->
+    <section class="tab-panel active" id="tab-industries" role="tabpanel">
+
+      <div class="panel-intro">
+        <p>Primary goal is a <strong>propulsion internship</strong> — but open to any engineering experience. Toggle industries, edit role titles, and set your priority.</p>
+      </div>
+
+      <div class="industry-grid" id="industryGrid"></div>
+
+      <div class="add-industry-row">
+        <input type="text" id="newIndustryInput" placeholder="Add an industry (e.g. Civil Engineering)" />
+        <button class="btn" onclick="addIndustry()">+ Add</button>
+      </div>
+
+    </section>
+
+    <!-- ───── TAB 2: Details ───── -->
+    <section class="tab-panel" id="tab-description" role="tabpanel">
+
+      <div class="detail-section">
+        <label class="detail-label">📍 Locations <span class="detail-note">— less critical, but good to specify</span></label>
+        <div class="tag-wrap" id="locationsTags"></div>
+        <div class="add-row">
+          <input type="text" id="locationsInput" placeholder="e.g. Los Angeles, CA" />
+          <button class="btn" onclick="addTag('locations')">Add</button>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <label class="detail-label">🎯 Experience type</label>
+        <div class="pill-group" id="expPills"></div>
+      </div>
+
+      <div class="detail-section">
+        <label class="detail-label">🔧 Must-have skills <span class="detail-note">— include if relevant to the posting</span></label>
+        <div class="tag-wrap" id="skillsTags"></div>
+        <div class="add-row">
+          <input type="text" id="skillsInput" placeholder="e.g. ANSYS Fluent, CAD, Python" />
+          <button class="btn" onclick="addTag('skills')">Add</button>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <label class="detail-label">📝 Default cover letter blurb <span class="detail-note">— tailor per application</span></label>
+        <textarea id="blurbText" class="blurb-textarea" placeholder="Draft your default internship pitch here — customize for each application..."></textarea>
+      </div>
+
+    </section>
+
+    <!-- ───── TAB 3: Export ───── -->
+    <section class="tab-panel" id="tab-export" role="tabpanel">
+      <div class="export-intro">
+        <p>Copy your job criteria as JSON to paste into job-search tools, share with a mentor, or store as a backup.</p>
+      </div>
+      <div class="export-actions">
+        <button class="btn btn-primary" onclick="copyJSON()">Copy JSON</button>
+        <button class="btn" onclick="downloadJSON()">Download .json</button>
+      </div>
+      <pre class="export-pre" id="exportPre"></pre>
+      <p class="copy-confirm" id="copyConfirm">Copied to clipboard!</p>
+    </section>
+
+  </main>
+
+  <!-- Edit Roles Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <p class="modal-title" id="modalTitle">Edit roles</p>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <p class="modal-hint">One role per line</p>
+      <textarea class="modal-textarea" id="modalTextarea"></textarea>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveModal()">Save roles</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
