@@ -1,4 +1,6 @@
-// ── Resume base (Marcus Yang) ─────────────────────────────
+'use strict';
+
+// ── Resume ────────────────────────────────────────────────
 const BASE_RESUME = `Marcus D. Yang
 (650) 954-0288 | yangdmarcus@gmail.com | www.linkedin.com/in/marcusdyang
 
@@ -10,87 +12,87 @@ Relevant Coursework: Incompressible Flow, Aerospace Dynamical Systems, Mechanics
 ORGANIZATIONAL AND TECHNICAL EXPERIENCE
 
 Liquid Rocketry at Illinois | Spring 2025 – Present
-- Modeled P&ID system architecture in Siemens NX and integrated components into the pressurant tank assembly by sourcing, importing, and constraining CAD hardware to satisfy spatial constraints.
+- Modeled P&ID system architecture in Siemens NX; sourced and constrained CAD hardware to satisfy spatial constraints in pressurant tank assembly.
 - Created CAD geometries for canard-grid fin configurations and ran ANSYS Fluent CFD cases to quantify aerodynamic interactions across 0–20° deflection.
-- Assessed pressurant tank options, produced mechanical integration models (CAD) and verified fit against vehicle structural constraints and P&ID.
-- Engineered a KiCad PCB radio transmitter (USB-C + MCU) prototype enabling basic telemetry links for ground tests.
+- Assessed pressurant tank options, produced mechanical integration models, and verified fit against vehicle structural constraints.
+- Engineered a KiCad PCB radio transmitter (USB-C + MCU) enabling telemetry links for ground tests.
 
 CAD Project – McDonnell F-101 Voodoo (Siemens NX) | Spring 2025
-- Recreated a full McDonnell F-101 Voodoo in Siemens NX by extracting and scaling geometric dimensions from multi-view engineering drawings to accurately reconstruct fuselage, wing, and tail geometry.
-- Integrated articulated control surfaces (ailerons, elevators, rudder) using parametric assemblies and constraints to simulate realistic aircraft deflection.
+- Recreated a full F-101 Voodoo in Siemens NX from multi-view engineering drawings, reconstructing fuselage, wing, and tail geometry.
+- Integrated articulated control surfaces using parametric assemblies to simulate realistic aircraft deflection.
 
 Model Rocket Project (OpenRocket, Excel) | Fall 2024
-- Designed custom fin geometry in Siemens NX and fabricated a prototype to meet a target apogee; validated performance with OpenRocket simulations.
-- Examined rocket flight data reaching 430 ft apogee with 25 ft downrange drift, evaluating in-flight stability and comparing observed trajectory with simulation predictions.
-- Compiled a technical report and short video summarizing design decisions and flight results.
+- Designed custom fin geometry in Siemens NX; validated apogee with OpenRocket simulations.
+- Analyzed flight data: 430 ft apogee, 25 ft downrange drift; compared observed trajectory with simulation predictions.
 
 Glider Project | Fall 2024
-- Fabricated and tested gliders to optimize aerodynamic performance, achieving 101 ft glide distance and 3.9 s flight time, ranking 6th in class.
-- Performed iterative flight testing and analysis of glide path, mass distribution, and wing geometry to maximize lift-to-drag performance and flight endurance.
+- Achieved 101 ft glide distance and 3.9 s flight time (6th in class) through iterative testing and wing geometry optimization.
 
 TECHNICAL SKILLS
-Computer Languages: Python, C++, Java, JavaScript
-Software: NX, Fusion 360, Eagle PCB, KiCad, OpenRocket, XFLR5, ANSYS Fluent, Excel
-Shop Tools: Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press, Band Saw
-Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum Pipes, Plywood
+Languages: Python, C++, Java, JavaScript
+Software: Siemens NX, Fusion 360, ANSYS Fluent, KiCad, Eagle PCB, OpenRocket, XFLR5, Excel
+Shop: Spot Welder, Belt Sander, Laser Cutter, CNC Plasma Cutter, Table Saw, Drill Press, Band Saw
+Materials: Epoxy Resin, Fiberglass, Sheet Metal, Aluminum, Plywood
 
-LEADERSHIP AND ACTIVITIES
-
+LEADERSHIP
 Asian American Association | Fall 2024 – Present | Treasurer / Fundraising Officer
-- Directed fundraising initiatives that achieved a 400% year-over-year increase in funds raised.
-- Coached a team of interns in planning, launching, and managing their own independent fundraising projects.
+- 400% YoY increase in funds raised; coached team of interns on independent fundraising projects.
 
-Flight Club Aerospace | Summer 2021 – Spring 2024 | Landing Gear Research Lead | CAD | Fabrication
-- Manufactured wing and control surfaces: cut foam ribs with a hot-wire cutter, trimmed aluminum spars with a circular saw, and applied epoxy & fiberglass layups to produce aerodynamic skins; aligned two 7-ft wings for flight testing.
-- Modeled gussets and ribs in Fusion 360 and coordinated fit-checks between structural and aerodynamic components.
-- Oversaw logistics for wing transport/disassembly/reassembly and assembled and presented landing-gear recommendations based on structural load and cost analyses.`;
+Flight Club Aerospace | Summer 2021 – Spring 2024 | Landing Gear Research Lead
+- Manufactured 7-ft wings: hot-wire foam ribs, aluminum spars, epoxy/fiberglass skins.
+- Modeled gussets/ribs in Fusion 360; presented landing-gear recommendations from structural load and cost analyses.`;
 
-// ── Default criteria ──────────────────────────────────────
+// ── Defaults ──────────────────────────────────────────────
 const DEFAULTS = {
   industries: [
     { name: "Aerospace & Propulsion", roles: ["Propulsion Engineering Intern", "Aerospace Engineering Intern", "Rocket Systems Intern", "Combustion Research Intern"], active: true, primary: true },
     { name: "Mechanical Engineering", roles: ["Mechanical Engineering Intern", "Design Engineering Intern", "Structural Analysis Intern", "Manufacturing Intern"], active: true, primary: false },
-    { name: "Defense & Space", roles: ["Systems Engineering Intern", "R&D Engineering Intern", "Test & Evaluation Intern", "Mission Systems Intern"], active: true, primary: false },
-    { name: "Consulting", roles: ["Engineering Consulting Intern", "Technical Analyst Intern", "Operations Intern"], active: true, primary: false },
-    { name: "Automotive", roles: ["Mechanical Engineering Intern", "Powertrain Intern", "Vehicle Dynamics Intern"], active: false, primary: false },
-    { name: "Energy", roles: ["Thermal Systems Intern", "Mechanical Engineering Intern", "Process Engineering Intern"], active: false, primary: false }
+    { name: "Defense & Space", roles: ["Systems Engineering Intern", "R&D Engineering Intern", "Test & Evaluation Intern"], active: true, primary: false },
+    { name: "Consulting", roles: ["Engineering Consulting Intern", "Technical Analyst Intern"], active: true, primary: false },
+    { name: "Automotive", roles: ["Mechanical Engineering Intern", "Powertrain Intern"], active: false, primary: false },
+    { name: "Energy", roles: ["Thermal Systems Intern", "Mechanical Engineering Intern"], active: false, primary: false }
   ],
   locations: ["Champaign, IL", "Los Angeles, CA", "Houston, TX", "Seattle, WA", "Remote"],
   experience: { "Internship": true, "Co-op": true, "Research (REU)": false, "Part-time": false },
   skills: ["ANSYS Fluent", "Siemens NX", "CAD", "Python", "KiCad", "OpenRocket"],
+  seasons: { "Summer 2026": true, "Summer 2027": false, "Fall 2026": false, "Spring 2027": false },
   blurb: ""
 };
 
 // ── State ─────────────────────────────────────────────────
-let state, currentJobs = [], currentResumeText = "";
-let editingIndustryIdx = null;
+let state, jobs = [], applications = [], currentResumeText = "", editingIndustryIdx = null, editingAppIdx = null;
 
-try {
-  const s = localStorage.getItem("marcus_jsc");
-  state = s ? JSON.parse(s) : JSON.parse(JSON.stringify(DEFAULTS));
-} catch (e) { state = JSON.parse(JSON.stringify(DEFAULTS)); }
+function loadState() {
+  try { state = JSON.parse(localStorage.getItem("mjsc3") || "null") || JSON.parse(JSON.stringify(DEFAULTS)); } catch { state = JSON.parse(JSON.stringify(DEFAULTS)); }
+  if (!state.seasons) state.seasons = DEFAULTS.seasons;
+  try { jobs = JSON.parse(localStorage.getItem("mjsc3_jobs") || "[]"); } catch { jobs = []; }
+  try { applications = JSON.parse(localStorage.getItem("mjsc3_apps") || "[]"); } catch { applications = []; }
+}
+loadState();
 
-// ── API key management ────────────────────────────────────
-function getApiKey() { return localStorage.getItem("marcus_api_key") || ""; }
+function save() {
+  try { localStorage.setItem("mjsc3", JSON.stringify(state)); } catch {}
+  showToast();
+}
+function saveJobs() { try { localStorage.setItem("mjsc3_jobs", JSON.stringify(jobs)); } catch {} }
+function saveApps() { try { localStorage.setItem("mjsc3_apps", JSON.stringify(applications)); } catch {} }
+function showToast() { const t = document.getElementById("savedToast"); t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 1800); }
 
+// ── API key ───────────────────────────────────────────────
+function getApiKey() { return localStorage.getItem("mjsc3_key") || ""; }
 function saveApiKey() {
-  const val = document.getElementById("apiKeyInput").value.trim();
-  if (!val.startsWith("sk-ant-")) {
-    alert("That doesn't look like a valid Anthropic API key. It should start with sk-ant-");
-    return;
-  }
-  localStorage.setItem("marcus_api_key", val);
+  const v = document.getElementById("apiKeyInput").value.trim();
+  if (!v.startsWith("sk-ant-")) { alert("Invalid key — should start with sk-ant-"); return; }
+  localStorage.setItem("mjsc3_key", v);
   document.getElementById("setupScreen").classList.add("hidden");
   document.getElementById("appShell").classList.remove("hidden");
   initApp();
 }
-
 function clearApiKey() {
-  if (!confirm("Reset your API key? You'll need to enter it again.")) return;
-  localStorage.removeItem("marcus_api_key");
+  if (!confirm("Reset API key?")) return;
+  localStorage.removeItem("mjsc3_key");
   location.reload();
 }
-
 document.getElementById("apiKeyInput").addEventListener("keydown", e => { if (e.key === "Enter") saveApiKey(); });
 
 // ── Boot ──────────────────────────────────────────────────
@@ -104,100 +106,131 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function initApp() {
   renderIndustryCards();
-  ["locations", "skills"].forEach(k => {
+  renderSeasonPills();
+  ["locations","skills"].forEach(k => {
     renderTags(k);
     const inp = document.getElementById(k + "Input");
     if (inp) inp.addEventListener("keydown", e => { if (e.key === "Enter") addTag(k); });
   });
   renderExpPills();
-  const blurbEl = document.getElementById("blurbText");
-  blurbEl.value = state.blurb || "";
-  blurbEl.addEventListener("input", () => { state.blurb = blurbEl.value; save(); });
+  const b = document.getElementById("blurbText");
+  b.value = state.blurb || "";
+  b.addEventListener("input", () => { state.blurb = b.value; save(); });
   document.getElementById("newIndustryInput").addEventListener("keydown", e => { if (e.key === "Enter") addIndustry(); });
+  renderJobList(jobs);
+  renderKanban();
+  checkAutoRefresh();
 }
 
-// ── Persist ───────────────────────────────────────────────
-function save() {
-  try { localStorage.setItem("marcus_jsc", JSON.stringify(state)); } catch (e) {}
-  const t = document.getElementById("savedToast");
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
-}
-
-// ── Top-level tabs ────────────────────────────────────────
-function switchTopTab(name) {
-  document.querySelectorAll(".top-tab").forEach((b, i) => b.classList.toggle("active", ["search","criteria"][i] === name));
-  document.querySelectorAll(".top-panel").forEach(p => p.classList.remove("active"));
-  const panel = document.getElementById("top-" + name);
-  if (panel) { panel.classList.remove("hidden"); panel.classList.add("active"); }
-  if (name === "criteria") {
-    document.querySelectorAll(".top-panel").forEach(p => { if (p.id !== "top-criteria") p.classList.add("hidden"); });
-  } else {
-    document.querySelectorAll(".top-panel").forEach(p => { if (p.id !== "top-search") p.classList.add("hidden"); });
+// ── Auto-refresh (once per day) ───────────────────────────
+function checkAutoRefresh() {
+  const last = parseInt(localStorage.getItem("mjsc3_lastSearch") || "0");
+  const now = Date.now();
+  const elapsed = now - last;
+  const label = document.getElementById("lastUpdated");
+  if (last) {
+    const hrs = Math.floor(elapsed / 3600000);
+    label.textContent = hrs < 1 ? "Updated recently" : hrs < 24 ? `Updated ${hrs}h ago` : "Updated >24h ago";
   }
+  // Auto-run if more than 22h since last search and we have jobs cached
+  if (elapsed > 22 * 3600000 && jobs.length > 0) {
+    label.textContent = "Auto-refreshing…";
+    runJobSearch(true);
+  }
+}
+
+// ── Top tabs ──────────────────────────────────────────────
+function switchTop(name) {
+  document.querySelectorAll(".top-tab").forEach((b, i) => b.classList.toggle("active", ["jobs","tracker","criteria"][i] === name));
+  document.querySelectorAll(".top-panel").forEach(p => { p.classList.remove("active"); p.classList.add("hidden"); });
+  const p = document.getElementById("top-" + name);
+  if (p) { p.classList.remove("hidden"); p.classList.add("active"); }
+  if (name === "criteria") populateFilterDropdown();
 }
 
 // ── Criteria sub-tabs ─────────────────────────────────────
 function switchTab(name) {
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   document.querySelectorAll(".tab-panel").forEach(p => { p.classList.remove("active"); p.classList.add("hidden"); });
-  const btns = document.querySelectorAll(".tab-btn");
-  const tabs = ["industries", "description", "xport"];
-  const idx = tabs.indexOf(name);
-  if (btns[idx]) btns[idx].classList.add("active");
+  const map = ["industries","details","xport"];
+  const idx = map.indexOf(name);
+  document.querySelectorAll(".tab-btn")[idx]?.classList.add("active");
   const panel = document.getElementById("tab-" + name);
   if (panel) { panel.classList.remove("hidden"); panel.classList.add("active"); }
-  if (name === "xport") {
-    document.getElementById("exportPre").textContent = JSON.stringify(state, null, 2);
-  }
+  if (name === "xport") document.getElementById("exportPre").textContent = JSON.stringify(state, null, 2);
+}
+
+// ── Season pills ──────────────────────────────────────────
+function renderSeasonPills() {
+  const wrap = document.getElementById("seasonPills");
+  wrap.innerHTML = "";
+  Object.keys(state.seasons).forEach(label => {
+    const btn = document.createElement("button");
+    btn.className = "pill-opt" + (state.seasons[label] ? " active" : "");
+    btn.textContent = label;
+    btn.onclick = () => { state.seasons[label] = !state.seasons[label]; save(); renderSeasonPills(); };
+    wrap.appendChild(btn);
+  });
 }
 
 // ── Job search ────────────────────────────────────────────
-async function runJobSearch() {
+async function runJobSearch(auto = false) {
   const btn = document.getElementById("searchBtn");
   const btnText = document.getElementById("searchBtnText");
   const status = document.getElementById("searchStatus");
 
   btn.disabled = true;
-  btnText.textContent = "Searching...";
+  btnText.textContent = "Searching…";
   status.classList.remove("hidden");
-  status.innerHTML = `<div class="spinner"></div><span>Searching the web for internships matching your criteria...</span>`;
-  document.getElementById("jobResultsArea").classList.add("hidden");
+  status.innerHTML = `<div class="spinner"></div><span>Searching the web for current open internships…</span>`;
 
   const activeIndustries = state.industries.filter(i => i.active);
-  const roles = activeIndustries.flatMap(i => i.roles).slice(0, 8).join(", ");
-  const locations = state.locations.join(", ");
+  const roles = activeIndustries.flatMap(i => i.roles).slice(0, 10).join(", ");
+  const locs = state.locations.join(", ");
   const skills = state.skills.join(", ");
-  const primaryInd = state.industries.find(i => i.primary)?.name || "Aerospace & Propulsion";
+  const primary = state.industries.find(i => i.primary)?.name || "Aerospace & Propulsion";
+  const seasons = Object.keys(state.seasons).filter(k => state.seasons[k]).join(" or ");
+  const today = new Date().toISOString().split("T")[0];
 
-  const prompt = `You are a job search assistant helping Marcus Yang, a sophomore Aerospace Engineering student at UIUC (GPA 3.57, James Scholar) find internships for Summer 2026.
+  const prompt = `Today's date is ${today}. You are a job search assistant for Marcus Yang, a sophomore Aerospace Engineering student at UIUC (GPA 3.57, James Scholar).
 
-His background: CFD (ANSYS Fluent), Siemens NX CAD, KiCad PCB design, Python, rocketry (Liquid Rocketry at Illinois), glider fabrication, fiberglass/epoxy composites, OpenRocket simulations.
+His background: ANSYS Fluent CFD, Siemens NX CAD, KiCad PCB design, Python, rocketry (Liquid Rocketry at Illinois), fiberglass/epoxy composites, OpenRocket.
 
-Primary goal: ${primaryInd} internship. Also open to: ${activeIndustries.map(i=>i.name).join(", ")}.
-Target roles include: ${roles}
-Preferred locations: ${locations}
-Key skills: ${skills}
+Target season: ${seasons}
+Primary interest: ${primary}
+Also open to: ${activeIndustries.map(i=>i.name).join(", ")}
+Roles: ${roles}
+Locations: ${locs}
+Skills: ${skills}
 
-Search the web right now for real, currently open internship positions matching these criteria for Summer 2026. Focus on legitimate job postings from company career pages, LinkedIn, Handshake, Indeed, or similar.
+CRITICAL REQUIREMENTS — apply all of these or do not include the listing:
+1. The posting must have been listed or confirmed active WITHIN THE LAST 30 DAYS from today (${today})
+2. The application deadline must be in the FUTURE (after ${today}) — do NOT include expired postings
+3. The position must be for ${seasons} — verify the posting explicitly states this
+4. Only include postings you can verify exist right now via web search
 
-Return ONLY a JSON array of 6-8 jobs. No markdown, no code fences, just raw JSON. Each job object must have exactly these fields:
+Search job boards right now (LinkedIn, Handshake, Indeed, company career pages, Glassdoor) for these specific roles. For each result, verify the posting is still live before including it.
+
+Return ONLY a valid JSON array of 6-10 jobs. No markdown, no explanation, just raw JSON. Each object:
 {
-  "title": "exact job title",
+  "title": "exact job title from the posting",
   "company": "company name",
   "location": "city, state or Remote",
-  "type": "Internship" or "Co-op",
-  "url": "direct URL to job posting or company careers page",
-  "description": "2-3 sentence summary of what the intern will do",
-  "requirements": ["requirement 1", "requirement 2", "requirement 3"],
-  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4"],
+  "type": "Internship or Co-op",
+  "url": "direct URL to the live job posting",
+  "posted": "YYYY-MM-DD or null if unknown",
+  "deadline": "YYYY-MM-DD or null if unknown",
+  "description": "2-3 sentence summary of what the intern will do day-to-day",
+  "requirements": ["requirement 1", "requirement 2", "requirement 3", "requirement 4"],
+  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+  "industry": "one of the industry names provided",
   "matchScore": 85
 }
 
-matchScore is 0-100 based on how well it matches Marcus's background. Sort by matchScore descending.`;
+Sort by matchScore descending. If you cannot find 6 verified current listings, return fewer — do NOT fabricate or include expired/unverifiable postings.`;
 
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -213,189 +246,277 @@ matchScore is 0-100 based on how well it matches Marcus's background. Sort by ma
       })
     });
 
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error?.message || "API error " + response.status);
-    }
-
-    const data = await response.json();
-
-    // Extract text from all content blocks
-    const fullText = data.content
-      .filter(b => b.type === "text")
-      .map(b => b.text)
-      .join("\n");
-
-    // Parse JSON from response
-    let jobs = [];
-    const jsonMatch = fullText.match(/\[[\s\S]*\]/);
-    if (jsonMatch) {
-      jobs = JSON.parse(jsonMatch[0]);
-    } else {
-      throw new Error("Could not parse job results. Please try again.");
-    }
-
-    currentJobs = jobs;
-    renderJobResults(jobs);
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || "API error " + res.status); }
+    const data = await res.json();
+    const text = data.content.filter(b => b.type === "text").map(b => b.text).join("\n");
+    const match = text.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error("No job results returned. Try again.");
+    jobs = JSON.parse(match[0]);
+    saveJobs();
+    localStorage.setItem("mjsc3_lastSearch", Date.now().toString());
+    document.getElementById("lastUpdated").textContent = "Updated just now";
+    renderJobList(jobs);
+    populateFilterDropdown();
     status.classList.add("hidden");
-
   } catch (err) {
-    status.innerHTML = `<span style="color:#f87171;">Error: ${err.message}</span>`;
-    console.error(err);
+    status.innerHTML = `<span style="color:#f87171;">⚠ ${err.message}</span>`;
   }
 
   btn.disabled = false;
-  btnText.textContent = "Find jobs for me";
+  btnText.textContent = "Find jobs";
 }
 
-// ── Render job results ────────────────────────────────────
-function renderJobResults(jobs) {
-  const tabBar = document.getElementById("jobTabBar");
-  const panels = document.getElementById("jobPanels");
-  const area = document.getElementById("jobResultsArea");
+// ── Render job accordion ──────────────────────────────────
+function renderJobList(list) {
+  const container = document.getElementById("jobList");
+  const empty = document.getElementById("emptyState");
+  container.innerHTML = "";
 
-  tabBar.innerHTML = "";
-  panels.innerHTML = "";
+  if (!list || list.length === 0) {
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
 
-  jobs.forEach((job, i) => {
-    // Tab button
-    const btn = document.createElement("button");
-    btn.className = "job-tab-btn" + (i === 0 ? " active" : "");
-    btn.textContent = job.company;
-    btn.title = job.title + " — " + job.company;
-    btn.onclick = () => switchJobTab(i);
-    tabBar.appendChild(btn);
+  list.forEach((job, i) => {
+    const row = document.createElement("div");
+    row.className = "job-row";
+    row.dataset.idx = i;
+    row.dataset.industry = job.industry || "";
+    row.dataset.match = job.matchScore || 0;
 
-    // Panel
-    const panel = document.createElement("div");
-    panel.className = "job-panel" + (i === 0 ? " active" : "");
-    panel.id = "job-panel-" + i;
-
+    const deadlineDisplay = formatDeadline(job.deadline);
     const mySkills = state.skills.map(s => s.toLowerCase());
     const tagsHtml = (job.keywords || []).map(kw => {
-      const isMatch = mySkills.some(s => kw.toLowerCase().includes(s) || s.includes(kw.toLowerCase()));
-      return `<span class="job-tag${isMatch ? " match" : ""}">${kw}</span>`;
+      const m = mySkills.some(s => kw.toLowerCase().includes(s) || s.includes(kw.toLowerCase()));
+      return `<span class="job-tag${m?" match":""}">${kw}</span>`;
     }).join("");
+    const reqHtml = (job.requirements || []).map(r => `<li>${r}</li>`).join("");
+    const fillW = Math.min(100, job.matchScore || 0);
 
-    const reqHtml = (job.requirements || []).map(r => `<li style="font-size:13px;line-height:1.7;margin-bottom:4px;">${r}</li>`).join("");
-
-    const matchColor = job.matchScore >= 80 ? "var(--accent)" : job.matchScore >= 60 ? "#fbbf24" : "var(--text-muted)";
-
-    panel.innerHTML = `
-      <div class="job-card">
-        <div class="job-card-header">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-            <div>
-              <p class="job-title">${job.title}</p>
-              <p class="job-company">${job.company}</p>
-              <div class="job-meta">
-                <span>📍 ${job.location}</span>
-                <span>🎯 ${job.type}</span>
-                <span style="color:${matchColor};">★ ${job.matchScore}% match</span>
-              </div>
-            </div>
+    row.innerHTML = `
+      <div class="job-row-header" onclick="toggleJob(this)">
+        <span class="job-row-company">${job.company}</span>
+        <span class="job-row-title">${job.title}</span>
+        <span class="job-row-location">${job.location}</span>
+        <span class="job-row-deadline ${deadlineDisplay.cls}">${deadlineDisplay.text}</span>
+        <span class="job-row-chevron">▾</span>
+      </div>
+      <div class="job-row-body">
+        <div class="match-bar-wrap">
+          <div class="match-bar-bg"><div class="match-bar-fill" style="width:${fillW}%"></div></div>
+          <span class="match-score-label">${job.matchScore}% match</span>
+        </div>
+        <div class="job-body-grid">
+          <div>
+            <p class="job-section-title">About the role</p>
+            <p class="job-desc">${job.description}</p>
+            ${job.posted ? `<p style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-top:8px;">Posted: ${job.posted}</p>` : ""}
+          </div>
+          <div>
+            <p class="job-section-title">Requirements</p>
+            <ul class="req-list">${reqHtml}</ul>
           </div>
         </div>
-
-        <div class="job-section">
-          <p class="job-section-title">About the role</p>
-          <div class="job-desc"><p>${job.description}</p></div>
-        </div>
-
-        <div class="job-section">
-          <p class="job-section-title">Requirements</p>
-          <ul style="padding-left:18px;">${reqHtml}</ul>
-        </div>
-
-        <div class="job-section">
-          <p class="job-section-title">Keywords <span style="font-size:10px;color:var(--accent);">● = matches your skills</span></p>
+        <div style="margin-top:14px;">
+          <p class="job-section-title">Keywords <span style="color:var(--accent);font-size:10px;">● = matches your skills</span></p>
           <div class="job-tags">${tagsHtml}</div>
         </div>
-
         <div class="job-actions">
-          <button class="btn btn-primary" onclick="generateResume(${i})">✦ Tailor my resume</button>
+          <button class="btn btn-primary" onclick="generateResume(${i})">✦ Tailor resume</button>
           ${job.url ? `<a class="btn" href="${job.url}" target="_blank" rel="noopener">View posting ↗</a>` : ""}
+          <button class="btn" onclick="addToTrackerFromJob(${i})">+ Track this</button>
         </div>
-      </div>
-    `;
-    panels.appendChild(panel);
+      </div>`;
+    container.appendChild(row);
   });
-
-  document.getElementById("resultsTitle").textContent = `${jobs.length} results found`;
-  area.classList.remove("hidden");
 }
 
-function switchJobTab(i) {
-  document.querySelectorAll(".job-tab-btn").forEach((b, j) => b.classList.toggle("active", j === i));
-  document.querySelectorAll(".job-panel").forEach((p, j) => p.classList.toggle("active", j === i));
+function toggleJob(header) {
+  const row = header.parentElement;
+  const isOpen = row.classList.contains("open");
+  document.querySelectorAll(".job-row.open").forEach(r => r.classList.remove("open"));
+  if (!isOpen) row.classList.add("open");
+}
+
+function formatDeadline(d) {
+  if (!d) return { text: "Deadline unknown", cls: "deadline-unknown" };
+  const diff = (new Date(d) - new Date()) / 86400000;
+  if (diff < 0) return { text: "Expired", cls: "deadline-soon" };
+  if (diff < 14) return { text: `Due in ${Math.ceil(diff)}d`, cls: "deadline-soon" };
+  return { text: `Due ${d}`, cls: "deadline-ok" };
+}
+
+// ── Filter ────────────────────────────────────────────────
+function populateFilterDropdown() {
+  const sel = document.getElementById("filterIndustry");
+  const current = sel.value;
+  const industries = [...new Set(jobs.map(j => j.industry).filter(Boolean))];
+  sel.innerHTML = `<option value="">All industries</option>` + industries.map(i => `<option value="${i}"${i===current?" selected":""}>${i}</option>`).join("");
+}
+
+function filterJobs() {
+  const ind = document.getElementById("filterIndustry").value;
+  const minMatch = parseInt(document.getElementById("filterMatch").value || "0");
+  const filtered = jobs.filter(j => (!ind || j.industry === ind) && (j.matchScore || 0) >= minMatch);
+  renderJobList(filtered);
 }
 
 // ── Resume tailoring ──────────────────────────────────────
-async function generateResume(jobIdx) {
-  const job = currentJobs[jobIdx];
+async function generateResume(idx) {
+  const job = jobs[idx];
   if (!job) return;
-
-  document.getElementById("resumeModalTitle").textContent = `Tailored for: ${job.title} @ ${job.company}`;
-  document.getElementById("resumeModalBody").innerHTML = `<div class="resume-loading"><div class="spinner"></div> Tailoring your resume to this role...</div>`;
+  document.getElementById("resumeModalTitle").textContent = `Tailored — ${job.title} @ ${job.company}`;
+  document.getElementById("resumeModalBody").innerHTML = `<div class="resume-loading"><div class="spinner"></div> Tailoring your resume…</div>`;
   document.getElementById("resumeModalBackdrop").classList.add("open");
 
-  const prompt = `You are a resume expert. Tailor the following resume for this specific job posting. 
-
-JOB:
-Title: ${job.title}
-Company: ${job.company}
-Description: ${job.description}
-Requirements: ${(job.requirements || []).join("; ")}
-Keywords: ${(job.keywords || []).join(", ")}
-
-INSTRUCTIONS:
-- Reorder bullet points so the most relevant ones to THIS job appear first in each section
-- Add or emphasize keywords from the job description naturally within existing bullet points where truthful
-- Write a 2-sentence tailored summary at the top after the contact info, specific to this role
-- Keep ALL original content — do not fabricate experience or skills
-- Keep the same plain-text format as the original
-- Do not add any explanation or preamble — return only the resume text
-
-ORIGINAL RESUME:
-${BASE_RESUME}`;
-
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": getApiKey(),
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true"
-      },
+      headers: { "Content-Type": "application/json", "x-api-key": getApiKey(), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
         max_tokens: 2000,
-        messages: [{ role: "user", content: prompt }]
-      })
+        messages: [{ role: "user", content: `Tailor this resume for the job below. Rules: reorder bullets so most relevant appear first; weave in keywords naturally where truthful; add a 2-sentence tailored summary after contact info; do NOT fabricate anything; return only the resume text, no preamble.
+
+JOB: ${job.title} at ${job.company}
+Description: ${job.description}
+Requirements: ${(job.requirements||[]).join("; ")}
+Keywords: ${(job.keywords||[]).join(", ")}
+
+RESUME:
+${BASE_RESUME}` }] })
     });
-
-    const data = await response.json();
-    const text = data.content?.find(b => b.type === "text")?.text || "Error generating resume.";
-    currentResumeText = text;
-    document.getElementById("resumeModalBody").textContent = text;
-
+    const data = await res.json();
+    currentResumeText = data.content?.find(b => b.type === "text")?.text || "Error generating resume.";
+    document.getElementById("resumeModalBody").textContent = currentResumeText;
   } catch (err) {
     document.getElementById("resumeModalBody").textContent = "Error: " + err.message;
   }
 }
 
-function closeResumeModal() {
-  document.getElementById("resumeModalBackdrop").classList.remove("open");
-}
-
+function closeResumeModal() { document.getElementById("resumeModalBackdrop").classList.remove("open"); }
 function copyResume() {
-  if (!currentResumeText) return;
   navigator.clipboard.writeText(currentResumeText).then(() => {
     const btn = document.querySelector("#resumeModalBackdrop .btn-primary");
     if (btn) { btn.textContent = "Copied!"; setTimeout(() => btn.textContent = "Copy text", 2000); }
   });
 }
+
+// ── Application tracker ───────────────────────────────────
+const STATUSES = [
+  { key: "applied",     label: "Applied",          dot: "dot-applied" },
+  { key: "interview1",  label: "Interview — R1",   dot: "dot-interview1" },
+  { key: "interview2",  label: "Interview — R2",   dot: "dot-interview2" },
+  { key: "interview3",  label: "Interview — R3",   dot: "dot-interview3" },
+  { key: "offer",       label: "Offer",             dot: "dot-offer" },
+  { key: "rejected",    label: "Rejected",          dot: "dot-rejected" },
+];
+
+function renderKanban() {
+  const kanban = document.getElementById("kanban");
+  kanban.innerHTML = "";
+  const counts = document.getElementById("statusCounts");
+  counts.innerHTML = "";
+
+  STATUSES.forEach(s => {
+    const apps = applications.filter(a => a.status === s.key);
+    const col = document.createElement("div");
+    col.className = "kanban-col";
+    col.innerHTML = `<div class="kanban-col-header">
+      <span class="kanban-col-title"><span class="status-dot ${s.dot}" style="width:7px;height:7px;border-radius:50%;display:inline-block;"></span>${s.label}</span>
+      <span class="kanban-count">${apps.length}</span>
+    </div>`;
+
+    if (apps.length === 0) {
+      col.innerHTML += `<p class="empty-col">None yet</p>`;
+    } else {
+      apps.forEach(app => {
+        const card = document.createElement("div");
+        card.className = "app-card";
+        card.innerHTML = `
+          <p class="app-company">${app.company}</p>
+          <p class="app-title">${app.title}</p>
+          <div class="app-meta">
+            <span>${app.location || "—"}</span>
+            <span>${app.deadline ? "Due " + app.deadline : ""}</span>
+          </div>
+          ${app.notes ? `<p style="font-size:11px;color:var(--text-muted);font-family:var(--mono);margin-top:6px;">${app.notes}</p>` : ""}
+          <div class="app-card-actions">
+            <select class="filter-select" style="font-size:10px;padding:3px 6px;" onchange="updateAppStatus('${app.id}', this.value)">
+              ${STATUSES.map(st => `<option value="${st.key}"${st.key===app.status?" selected":""}>${st.label}</option>`).join("")}
+            </select>
+            <button class="btn btn-sm btn-danger" onclick="deleteApp('${app.id}')">✕</button>
+          </div>`;
+        col.appendChild(card);
+      });
+    }
+    kanban.appendChild(col);
+
+    // Count badge
+    const badge = document.createElement("span");
+    badge.className = "status-count";
+    badge.innerHTML = `<span class="status-dot ${s.dot}" style="width:7px;height:7px;border-radius:50%;display:inline-block;"></span>${s.label}: ${apps.length}`;
+    counts.appendChild(badge);
+  });
+}
+
+function openAddApp() {
+  editingAppIdx = null;
+  document.getElementById("appCompany").value = "";
+  document.getElementById("appTitle").value = "";
+  document.getElementById("appLocation").value = "";
+  document.getElementById("appDate").value = new Date().toISOString().split("T")[0];
+  document.getElementById("appDeadline").value = "";
+  document.getElementById("appStatus").value = "applied";
+  document.getElementById("appNotes").value = "";
+  document.getElementById("addAppBackdrop").classList.add("open");
+}
+
+function addToTrackerFromJob(idx) {
+  const job = jobs[idx];
+  if (!job) return;
+  document.getElementById("appCompany").value = job.company;
+  document.getElementById("appTitle").value = job.title;
+  document.getElementById("appLocation").value = job.location;
+  document.getElementById("appDate").value = new Date().toISOString().split("T")[0];
+  document.getElementById("appDeadline").value = job.deadline || "";
+  document.getElementById("appStatus").value = "applied";
+  document.getElementById("appNotes").value = "";
+  document.getElementById("addAppBackdrop").classList.add("open");
+}
+
+function saveApplication() {
+  const app = {
+    id: Date.now().toString(),
+    company: document.getElementById("appCompany").value.trim(),
+    title: document.getElementById("appTitle").value.trim(),
+    location: document.getElementById("appLocation").value.trim(),
+    date: document.getElementById("appDate").value,
+    deadline: document.getElementById("appDeadline").value,
+    status: document.getElementById("appStatus").value,
+    notes: document.getElementById("appNotes").value.trim()
+  };
+  if (!app.company || !app.title) { alert("Company and title are required."); return; }
+  applications.push(app);
+  saveApps();
+  closeAddApp();
+  renderKanban();
+}
+
+function updateAppStatus(id, status) {
+  const app = applications.find(a => a.id === id);
+  if (app) { app.status = status; saveApps(); renderKanban(); }
+}
+
+function deleteApp(id) {
+  if (!confirm("Remove this application?")) return;
+  applications = applications.filter(a => a.id !== id);
+  saveApps();
+  renderKanban();
+}
+
+function closeAddApp() { document.getElementById("addAppBackdrop").classList.remove("open"); }
 
 // ── Industry cards ────────────────────────────────────────
 function renderIndustryCards() {
@@ -403,35 +524,29 @@ function renderIndustryCards() {
   grid.innerHTML = "";
   state.industries.forEach((ind, idx) => {
     const card = document.createElement("div");
-    card.className = "industry-card" + (ind.primary ? " primary" : "") + (!ind.active ? " inactive" : "");
-    const rolesHtml = ind.roles.slice(0, 4).map(r => `<span class="role-chip">${r}</span>`).join("");
-    const more = ind.roles.length > 4 ? `<span class="role-chip">+${ind.roles.length - 4} more</span>` : "";
+    card.className = "industry-card" + (ind.primary?" primary":"") + (!ind.active?" inactive":"");
+    const chips = ind.roles.slice(0,4).map(r=>`<span class="role-chip">${r}</span>`).join("");
+    const more = ind.roles.length>4 ? `<span class="role-chip">+${ind.roles.length-4}</span>` : "";
     card.innerHTML = `
-      <div class="card-top">
-        <span class="card-name">${ind.name}</span>
-        ${ind.primary ? '<span class="priority-badge">Priority</span>' : ""}
-      </div>
-      <div class="role-chips">${rolesHtml}${more}</div>
+      <div class="card-top"><span class="card-name">${ind.name}</span>${ind.primary?'<span class="priority-badge">Priority</span>':""}</div>
+      <div class="role-chips">${chips}${more}</div>
       <div class="card-actions">
         <button class="btn btn-sm" onclick="openEditModal(${idx})">Edit roles</button>
-        <button class="btn btn-sm" onclick="toggleIndustry(${idx})">${ind.active ? "Hide" : "Show"}</button>
-        ${!ind.primary ? `<button class="btn btn-sm" onclick="setPrimary(${idx})">Set priority</button>` : ""}
+        <button class="btn btn-sm" onclick="toggleIndustry(${idx})">${ind.active?"Hide":"Show"}</button>
+        ${!ind.primary?`<button class="btn btn-sm" onclick="setPrimary(${idx})">Set priority</button>`:""}
       </div>`;
     grid.appendChild(card);
   });
 }
-
-function toggleIndustry(idx) { state.industries[idx].active = !state.industries[idx].active; save(); renderIndustryCards(); }
-function setPrimary(idx) { state.industries.forEach((ind, i) => ind.primary = (i === idx)); save(); renderIndustryCards(); }
+function toggleIndustry(idx) { state.industries[idx].active=!state.industries[idx].active; save(); renderIndustryCards(); }
+function setPrimary(idx) { state.industries.forEach((ind,i)=>ind.primary=(i===idx)); save(); renderIndustryCards(); }
 function addIndustry() {
   const inp = document.getElementById("newIndustryInput");
-  const val = inp.value.trim();
-  if (!val) return;
-  state.industries.push({ name: val, roles: ["Engineering Intern"], active: true, primary: false });
-  save(); renderIndustryCards(); inp.value = "";
+  const v = inp.value.trim(); if(!v) return;
+  state.industries.push({name:v,roles:["Engineering Intern"],active:true,primary:false});
+  save(); renderIndustryCards(); inp.value="";
 }
 
-// ── Edit roles modal ──────────────────────────────────────
 function openEditModal(idx) {
   editingIndustryIdx = idx;
   document.getElementById("modalTitle").textContent = `Edit roles — ${state.industries[idx].name}`;
@@ -439,56 +554,52 @@ function openEditModal(idx) {
   document.getElementById("modalBackdrop").classList.add("open");
   document.getElementById("modalTextarea").focus();
 }
-function closeModal() { document.getElementById("modalBackdrop").classList.remove("open"); editingIndustryIdx = null; }
+function closeModal() { document.getElementById("modalBackdrop").classList.remove("open"); editingIndustryIdx=null; }
 function saveModal() {
-  if (editingIndustryIdx === null) return;
-  state.industries[editingIndustryIdx].roles = document.getElementById("modalTextarea").value.split("\n").map(r => r.trim()).filter(Boolean);
+  if (editingIndustryIdx===null) return;
+  state.industries[editingIndustryIdx].roles = document.getElementById("modalTextarea").value.split("\n").map(r=>r.trim()).filter(Boolean);
   save(); renderIndustryCards(); closeModal();
 }
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeResumeModal(); } });
 
 // ── Tags ──────────────────────────────────────────────────
 function renderTags(key) {
-  const wrap = document.getElementById(key + "Tags");
-  wrap.innerHTML = "";
-  state[key].forEach((v, i) => {
-    const span = document.createElement("span");
-    span.className = "tag";
-    span.innerHTML = `${v}<button aria-label="Remove ${v}" onclick="removeTag('${key}',${i})">×</button>`;
+  const wrap = document.getElementById(key+"Tags"); wrap.innerHTML="";
+  state[key].forEach((v,i) => {
+    const span = document.createElement("span"); span.className="tag";
+    span.innerHTML=`${v}<button aria-label="Remove ${v}" onclick="removeTag('${key}',${i})">×</button>`;
     wrap.appendChild(span);
   });
 }
 function addTag(key) {
-  const inp = document.getElementById(key + "Input");
-  const val = inp.value.trim();
-  if (!val || state[key].includes(val)) { inp.value = ""; return; }
-  state[key].push(val); save(); renderTags(key); inp.value = "";
+  const inp=document.getElementById(key+"Input"); const v=inp.value.trim();
+  if(!v||state[key].includes(v)){inp.value="";return;}
+  state[key].push(v); save(); renderTags(key); inp.value="";
 }
-function removeTag(key, i) { state[key].splice(i, 1); save(); renderTags(key); }
+function removeTag(key,i) { state[key].splice(i,1); save(); renderTags(key); }
 
-// ── Pills ─────────────────────────────────────────────────
 function renderExpPills() {
-  const wrap = document.getElementById("expPills");
-  wrap.innerHTML = "";
-  Object.keys(state.experience).forEach(label => {
-    const btn = document.createElement("button");
-    btn.className = "pill-opt" + (state.experience[label] ? " active" : "");
-    btn.textContent = label;
-    btn.onclick = () => { state.experience[label] = !state.experience[label]; save(); renderExpPills(); };
+  const wrap=document.getElementById("expPills"); wrap.innerHTML="";
+  Object.keys(state.experience).forEach(label=>{
+    const btn=document.createElement("button");
+    btn.className="pill-opt"+(state.experience[label]?" active":"");
+    btn.textContent=label;
+    btn.onclick=()=>{state.experience[label]=!state.experience[label];save();renderExpPills();};
     wrap.appendChild(btn);
   });
 }
 
 // ── Export ────────────────────────────────────────────────
 function copyJSON() {
-  navigator.clipboard.writeText(JSON.stringify(state, null, 2)).then(() => {
-    const el = document.getElementById("copyConfirm");
-    el.classList.add("show");
-    setTimeout(() => el.classList.remove("show"), 2000);
+  navigator.clipboard.writeText(JSON.stringify(state,null,2)).then(()=>{
+    const el=document.getElementById("copyConfirm"); el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2000);
   });
 }
 function downloadJSON() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
-  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "marcus-job-criteria.json" });
+  const a=Object.assign(document.createElement("a"),{href:URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"})),download:"marcus-criteria.json"});
   a.click();
 }
+
+// ── Keyboard ──────────────────────────────────────────────
+document.addEventListener("keydown", e => {
+  if (e.key==="Escape") { closeModal(); closeResumeModal(); closeAddApp(); }
+});
